@@ -1,29 +1,43 @@
 FROM centos:centos7.2.1511
 MAINTAINER Samuel Bernard "samuel.bernard@s4m.io"
 
-RUN yum -y update
-RUN systemctl mask systemd-remount-fs.service
+# Let's run stuff
+RUN \
 
-RUN CHEFURL="https://opscode-omnibus-packages.s3.amazonaws.com"; \
-    yum install -y ${CHEFURL}/el/7/x86_64/chef-12.7.2-1.el7.x86_64.rpm
-RUN yum install -y iproute sudo
+# Classic yum update
+  yum -y update; \
 
-RUN GEM_HOME="/tmp/verifier/gems" \
-    GEM_PATH="/tmp/verifier/gems" \
-    GEM_CACHE="/tmp/verifier/gems/cache" \
-    /opt/chef/embedded/bin/gem install busser --no-rdoc --no-ri \
-      --no-format-executable -n /tmp/verifier/bin --no-user-install
+# Mask remount-fs as it will always fail in a docker
+  systemctl mask systemd-remount-fs.service; \
 
-RUN GEM_HOME="/tmp/verifier/gems" \
-    GEM_PATH="/tmp/verifier/gems" \
-    GEM_CACHE="/tmp/verifier/gems/cache" \
-    /opt/chef/embedded/bin/gem install \
-      busser-serverspec serverspec --no-rdoc --no-ri
+# Basic chef install with useful package
+  CHEFURL="https://opscode-omnibus-packages.s3.amazonaws.com"; \
+  yum install -y ${CHEFURL}/el/7/x86_64/chef-12.7.2-1.el7.x86_64.rpm; \
+  yum install -y iproute sudo; \
 
-RUN yum clean all
+# Installing Busser
+  GEM_HOME="/tmp/verifier/gems" \
+  GEM_PATH="/tmp/verifier/gems" \
+  GEM_CACHE="/tmp/verifier/gems/cache" \
+  /opt/chef/embedded/bin/gem install busser --no-rdoc --no-ri \
+    --no-format-executable -n /tmp/verifier/bin --no-user-install; \
 
-VOLUME ["/sys/fs/cgroup"]
-VOLUME ["/sys/fs/fuse/connections"]
-VOLUME ["/run"]
+# Busser plugins
+  GEM_HOME="/tmp/verifier/gems" \
+  GEM_PATH="/tmp/verifier/gems" \
+  GEM_CACHE="/tmp/verifier/gems/cache" \
+  /opt/chef/embedded/bin/gem install \
+    busser-serverspec serverspec --no-rdoc --no-ri; \
 
+# Webmock can be very useful to test cookbooks
+  GEM_HOME="/tmp/verifier/gems" \
+  GEM_PATH="/tmp/verifier/gems" \
+  GEM_CACHE="/tmp/verifier/gems/cache" \
+  /opt/chef/embedded/bin/gem install \
+    webmock --no-rdoc --no-ri; \
+
+# Last command, we clean yum files everything
+  yum clean all;
+
+VOLUME ["/sys/fs/cgroup", "/sys/fs/fuse/connections", "/run"]
 CMD  ["/usr/lib/systemd/systemd"]
