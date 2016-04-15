@@ -11,8 +11,8 @@ RUN \
   systemctl mask systemd-remount-fs.service; \
 
 # Basic chef install with useful package
-  CHEFURL="https://opscode-omnibus-packages.s3.amazonaws.com"; \
-  yum install -y ${CHEFURL}/el/7/x86_64/chef-12.8.1-1.el7.x86_64.rpm; \
+  CHEFURL="https://packages.chef.io/stable"; \
+  yum install -y ${CHEFURL}/el/7/chef-12.9.38-1.el7.x86_64.rpm; \
   yum install -y iproute sudo; \
 
 # Installing Busser
