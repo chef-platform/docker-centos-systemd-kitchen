@@ -39,5 +39,5 @@ RUN \
 # Last command, we clean yum files everything
   yum clean all;
 
-VOLUME ["/sys/fs/cgroup", "/sys/fs/fuse/connections", "/run"]
+VOLUME ["/sys/fs/cgroup", "/run"]
 CMD  ["/usr/lib/systemd/systemd"]
