@@ -12,7 +12,7 @@ RUN \
 
 # Basic chef install with useful package
   CHEFURL="https://packages.chef.io/stable"; \
-  yum install -y ${CHEFURL}/el/7/chef-12.11.18-1.el7.x86_64.rpm; \
+  yum install -y ${CHEFURL}/el/7/chef-12.12.15-1.el7.x86_64.rpm; \
   yum install -y iproute sudo; \
 
 # Installing Busser
