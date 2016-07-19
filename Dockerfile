@@ -8,7 +8,7 @@ RUN \
   yum -y update; \
 
 # Mask remount-fs as it will always fail in a docker
-  systemctl mask systemd-remount-fs.service; \
+  systemctl mask systemd-remount-fs.service sys-fs-fuse-connections.mount; \
 
 # Basic chef install with useful package
   CHEFURL="https://packages.chef.io/stable"; \
