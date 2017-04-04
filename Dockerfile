@@ -1,5 +1,5 @@
 FROM sbernard/centos-chef
-MAINTAINER Samuel Bernard "samuel.bernard@s4m.io"
+MAINTAINER Samuel Bernard "samuel.bernard@gmail.com"
 
 ENV container docker
 RUN \
