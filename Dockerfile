@@ -1,4 +1,4 @@
-FROM sbernard/centos-chef
+FROM chefplatform/centos-chef
 MAINTAINER Samuel Bernard "samuel.bernard@gmail.com"
 
 # Let's run stuff
