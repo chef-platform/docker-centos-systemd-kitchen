@@ -1,6 +1,6 @@
 FROM centos:7
 
-MAINTAINER Samuel Bernard "samuel.bernard@gmail.com"
+LABEL maintainer="Samuel Bernard samuel.bernard@gmail.com"
 
 ENV LANG=en_US.UTF-8
 
