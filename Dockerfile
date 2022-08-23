@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:7.6.1810
 
 LABEL maintainer="Samuel Bernard samuel.bernard@gmail.com"
 
@@ -7,7 +7,7 @@ ENV LANG=en_US.UTF-8
 # Let's run stuff
 RUN \
 # Classic yum update
-  yum -y update; \
+  yum -y --releasever=7.6.1810 update; \
 # Basic latest chef install with useful package
   curl -L https://omnitruck.chef.io/install.sh | bash; \
   yum install -y iproute sudo less vim tree; \
